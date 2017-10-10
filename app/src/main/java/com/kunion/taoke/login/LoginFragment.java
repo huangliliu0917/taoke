@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Preconditions;
 import android.view.LayoutInflater;
@@ -50,8 +51,21 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LoginFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.login_frag, container, false);
         mLoginBean = new LoginBean();
+        mLoginBean.name.set("haha");
+        mLoginBean.password.set("haha123456");
+
         binding.setLoginbean(mLoginBean);
         binding.setPresenter((LoginPresenter) mPresenter);
         return binding.getRoot();
+    }
+
+    @Override
+    public void showLoginSuccess() {
+        Snackbar.make(getView(), R.string.login_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoginFail() {
+
     }
 }

@@ -13,6 +13,8 @@ import com.kunion.taoke.BaseView;
 public class LoginContract {
 
     interface View extends BaseView<Presenter> {
+        void showLoginSuccess();
+        void showLoginFail();
 
     }
 

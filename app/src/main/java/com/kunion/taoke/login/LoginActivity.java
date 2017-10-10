@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity{
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(true);
 
+        mActionBar.setTitle(R.string.login_title);
 
         LoginFragment loginFragment = (LoginFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
@@ -44,6 +45,9 @@ public class LoginActivity extends AppCompatActivity{
         mLoginPresenter = new LoginPresenter(ModelHelper.providerTasksRepository(), loginFragment);
     }
 
-
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
