@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="loginbean" type="com.kunion.taoke.login.LoginBean" />
+        <variable name="presenter"
+            type="com.kunion.taoke.login.LoginPresenter" />
+    </data>
+
+    <LinearLayout
+        style="@style/login_layout_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/login_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/no_name"
+            android:inputType="text"
+            android:text="@={loginbean.name}"
+            />
+
+
+        <EditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/no_password"
+            android:inputType="textPassword"
+            android:text="@={loginbean.password}"
+            />
+
+        <Button
+            android:id="@+id/go_login"
+            style="@style/button_text_max_width"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/login_title"
+            android:onClick="@{()-> presenter.loginTask(loginbean)}"
+            />
+
+
+    </LinearLayout>
+
+</layout>
