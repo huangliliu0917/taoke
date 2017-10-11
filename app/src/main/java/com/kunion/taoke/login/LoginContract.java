@@ -14,11 +14,14 @@ public class LoginContract {
 
     interface View extends BaseView<Presenter> {
         void showLoginSuccess();
-        void showLoginFail();
+        void showLoginFail(int resId);
+        void goMain();
 
     }
 
     interface Presenter extends BasePresenter {
         void loginTask(@NonNull LoginBean bean);
+
+        void initUserInfo();
     }
 }

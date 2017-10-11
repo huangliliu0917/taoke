@@ -2,7 +2,11 @@ package com.kunion.taoke.model;
 
 import android.support.annotation.NonNull;
 
+import com.kunion.taoke.TKApp;
+import com.kunion.taoke.model.remote.rest.resp.CheckVersionResp;
+import com.kunion.taoke.model.remote.rest.resp.GroupsResp;
 import com.kunion.taoke.model.remote.rest.resp.LoginResp;
+import com.kunion.taoke.model.remote.rest.resp.StringResp;
 
 import io.reactivex.Observable;
 
@@ -42,5 +46,21 @@ public class TasksRepository implements TasksSource{
     @Override
     public Observable<LoginResp> loginTask(@NonNull String name, @NonNull String password) {
         return mTasksRemoteSource.loginTask(name, password);
+    }
+
+    @Override
+    public Observable<GroupsResp> getGroups(@NonNull int page, @NonNull int size) {
+        return mTasksRemoteSource.getGroups(page, size);
+    }
+
+    @Override
+    public Observable<StringResp> getDstGroup() {
+        return mTasksRemoteSource.getDstGroup();
+    }
+
+    @Override
+    public Observable<CheckVersionResp> checkVersion(@NonNull int version) {
+
+        return mTasksRemoteSource.checkVersion(version);
     }
 }

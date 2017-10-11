@@ -46,6 +46,26 @@ public class ServiceGenerator  {
                 httpClient.connectTimeout(3, TimeUnit.SECONDS);
                 httpClient.readTimeout(2, TimeUnit.SECONDS);
                 httpClient.writeTimeout(2, TimeUnit.SECONDS);
+
+                httpClient.interceptors().add(new Interceptor(){
+                    @Override
+                    public Response intercept(Interceptor.Chain chain) throws IOException {
+                        Request request = chain.request();
+
+                        long t1 = System.nanoTime();
+                        Log.d("haha", String.format("Sending request %s on %s%n%s",
+                                request.url(), chain.connection(), request.headers()));
+
+                        Response response = chain.proceed(request);
+
+                        long t2 = System.nanoTime();
+                        Log.d("haha", String.format("Received response for %s in %.1fms%n%s",
+                                response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+
+                        return response;
+                    }
+                });
+
             } else {
                 httpClient.connectTimeout(15, TimeUnit.SECONDS);
                 httpClient.readTimeout(15, TimeUnit.SECONDS);
@@ -84,11 +104,9 @@ public class ServiceGenerator  {
         @Override
         public Response intercept(Interceptor.Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
-            HashSet<String> preferences = (HashSet<String>)TKApp.SPUtil.getValue(SharePfeUtils.PREF_COOKIES, new HashSet<String>());
-            for (String cookie : preferences) {
-                builder.addHeader("Cookie", cookie);
-                Log.v("OkHttp", "Adding Header: " + cookie); // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
-            }
+            String cookie = (String)TKApp.SPUtil.getValue(SharePfeUtils.PREF_COOKIES, "");
+            builder.addHeader("Cookie", cookie);
+            Log.v("OkHttp", "Adding Header: " + cookie); // This is done so I know which headers are being added; this interceptor is used after the normal logging of OkHttp
 
             return chain.proceed(builder.build());
         }
@@ -99,11 +117,16 @@ public class ServiceGenerator  {
         public Response intercept(Chain chain) throws IOException {
             Response originalResponse = chain.proceed(chain.request());
             if (!originalResponse.headers("Set-Cookie").isEmpty()) {
-                HashSet<String> cookies = new HashSet<>();
+                StringBuffer cookieBuffer = new StringBuffer();
+
                 for (String header : originalResponse.headers("Set-Cookie")) {
-                    cookies.add(header);
+
+                    String[] cookieArray = header.split(";");
+                    cookieBuffer.append(cookieArray[0]).append(";");
                 }
-                TKApp.SPUtil.putValue(SharePfeUtils.PREF_COOKIES, cookies);
+
+
+                TKApp.SPUtil.putValue(SharePfeUtils.PREF_COOKIES, cookieBuffer.toString());
             }
             return originalResponse;
         }

@@ -14,34 +14,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.kunion.taoke.R;
+import com.kunion.taoke.model.ModelHelper;
+import com.kunion.taoke.util.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MainPresenter mMainPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.main_act);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        MainFragment mainFragment = (MainFragment)getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+
+        if (mainFragment == null) {
+            mainFragment = MainFragment.newInstance();
+
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    mainFragment, R.id.contentFrame);
+        }
+
+        mMainPresenter = new MainPresenter(ModelHelper.providerTasksRepository(), mainFragment);
+        mMainPresenter.checkVersion();
     }
 
     @Override

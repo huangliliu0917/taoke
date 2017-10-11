@@ -1,5 +1,6 @@
 package com.kunion.taoke.login;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kunion.taoke.R;
+import com.kunion.taoke.TKApp;
 import com.kunion.taoke.databinding.LoginFragBinding;
+import com.kunion.taoke.main.MainActivity;
 
 import static android.support.v4.util.Preconditions.checkNotNull;
 
@@ -51,8 +54,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LoginFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.login_frag, container, false);
         mLoginBean = new LoginBean();
-        mLoginBean.name.set("haha");
-        mLoginBean.password.set("haha123456");
+
+        mLoginBean.name.set(TKApp.SPUtil.getValue("username", ""));
+        mLoginBean.password.set(TKApp.SPUtil.getValue("password", ""));
 
         binding.setLoginbean(mLoginBean);
         binding.setPresenter((LoginPresenter) mPresenter);
@@ -65,7 +69,13 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public void showLoginFail() {
+    public void showLoginFail(int resId) {
+        Snackbar.make(getView(), resId, Snackbar.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void goMain() {
+        startActivity(new Intent(getActivity(), MainActivity.class));
+        getActivity().finish();
     }
 }

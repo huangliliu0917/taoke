@@ -19,6 +19,8 @@ public class SharePfeUtils {
 
     private static final String obj = "a";
     public static final String PREF_COOKIES = "pref_cookie";
+    public static final String UVERSION_TIME = "update_time";
+
     SharedPreferences mPreference;
 
     public SharePfeUtils(Context context) {
