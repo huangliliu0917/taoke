@@ -1,11 +1,10 @@
 package com.kunion.taoke.main;
 
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import android.view.View;
 
+import com.kunion.taoke.R;
 import com.kunion.taoke.TKApp;
-import com.kunion.taoke.login.LoginContract;
 import com.kunion.taoke.model.TasksSource;
 import com.kunion.taoke.model.remote.rest.info.CheckVersion;
 import com.kunion.taoke.model.remote.rest.resp.CheckVersionResp;
@@ -15,7 +14,6 @@ import com.kunion.taoke.util.StringUtil;
 
 import io.reactivex.functions.Consumer;
 
-import static android.support.v4.util.Preconditions.checkNotNull;
 
 /**
  * Created by Administrator on 2017/10/11.
@@ -27,13 +25,13 @@ public class MainPresenter implements MainContract.Presenter {
     private TasksSource mTasksRepository;
 
     @NonNull
-    private final MainContract.View mMainView;
+    private final MainContract.ViewPresenter mMainView;
 
     private CheckVersion mVersionInfo;
 
-    public MainPresenter(@NonNull TasksSource tasksSource, @NonNull MainContract.View mainView) {
-        mTasksRepository = checkNotNull(tasksSource);
-        mMainView = checkNotNull(mainView);
+    public MainPresenter(@NonNull TasksSource tasksSource, @NonNull MainContract.ViewPresenter mainView) {
+        mTasksRepository = tasksSource;
+        mMainView = mainView;
 
         mMainView.setPresenter(this);
     }
@@ -82,5 +80,11 @@ public class MainPresenter implements MainContract.Presenter {
 
         int i=0;
 
+    }
+
+
+    @Override
+    public void switchPage(View view, int indexPage) {
+        mMainView.setCurPage(view, indexPage);
     }
 }

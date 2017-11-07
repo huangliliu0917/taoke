@@ -5,10 +5,13 @@ package com.kunion.taoke.model.remote.rest;
  */
 
 public abstract class BaseBean<T>{
+    public static int SUCCESS = 0;
+    public static int FAIL = 1;
+
     private int result;
     private T data;
     private String message;
-
+    private int total;
     public int getResult() {
         return result;
     }
@@ -31,5 +34,13 @@ public abstract class BaseBean<T>{
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

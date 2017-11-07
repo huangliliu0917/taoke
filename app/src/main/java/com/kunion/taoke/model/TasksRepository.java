@@ -6,7 +6,11 @@ import com.kunion.taoke.TKApp;
 import com.kunion.taoke.model.remote.rest.resp.CheckVersionResp;
 import com.kunion.taoke.model.remote.rest.resp.GroupsResp;
 import com.kunion.taoke.model.remote.rest.resp.LoginResp;
+import com.kunion.taoke.model.remote.rest.resp.SaleResp;
+import com.kunion.taoke.model.remote.rest.resp.StatsResp;
 import com.kunion.taoke.model.remote.rest.resp.StringResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -62,5 +66,15 @@ public class TasksRepository implements TasksSource{
     public Observable<CheckVersionResp> checkVersion(@NonNull int version) {
 
         return mTasksRemoteSource.checkVersion(version);
+    }
+
+    @Override
+    public Observable<SaleResp> getSalesByPage(@NonNull int page, @NonNull int size, @NonNull List<String> groups) {
+        return mTasksRemoteSource.getSalesByPage(page, size, groups);
+    }
+
+    @Override
+    public Observable<StatsResp> getEffectByPage(int page, int size, @NonNull String group) {
+        return mTasksRemoteSource.getEffectByPage(page, size, group);
     }
 }

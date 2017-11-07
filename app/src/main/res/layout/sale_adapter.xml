@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="info" type="com.kunion.taoke.model.remote.rest.info.SaleInfo" />
+        <import type="com.kunion.taoke.util.FormatUtil"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/sales_name"
+            style="@style/text_adapter_title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{info.name ?? @string/unknown}"
+            android:padding="@dimen/dp_4"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_4"
+            >
+
+            <TextView
+                android:id="@+id/sales_preprice"
+                style="@style/text_adapter_subtitle"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{@string/report_pre_price(info.payprice)}"
+                />
+            <TextView
+                android:id="@+id/sales_ei"
+                style="@style/text_adapter_subtitle"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/report_ei_price, FormatUtil.payIncome(info.getEi()))}"
+                android:layout_centerInParent="true"
+                />
+
+            <TextView
+                android:id="@+id/sales_paystate"
+                style="@style/text_adapter_subtitle"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{info.paystate}"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_4"
+            >
+
+            <TextView
+                android:id="@+id/sales_ctime"
+                style="@style/text_adapter_subtitle"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/report_sales_ctime, FormatUtil.getMMDDHHSS(info.getCtime()))}"
+                />
+
+            <TextView
+                android:id="@+id/sales_ftime"
+                style="@style/text_adapter_subtitle"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text='@{info.stime != null &amp;&amp; info.paystate.equalsIgnoreCase("订单结算") ? String.format(@string/report_sales_stime, FormatUtil.getMMDDHHSS(info.getStime())) : ""}'
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

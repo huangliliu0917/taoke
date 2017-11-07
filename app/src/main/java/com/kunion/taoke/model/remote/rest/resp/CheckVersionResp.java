@@ -2,7 +2,6 @@ package com.kunion.taoke.model.remote.rest.resp;
 
 
 import com.kunion.taoke.model.remote.rest.BaseBean;
-import com.kunion.taoke.model.remote.rest.info.AVBaseBean;
 import com.kunion.taoke.model.remote.rest.info.CheckVersion;
 
 /**

@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,9 +27,14 @@ import com.kunion.taoke.databinding.MainFragBinding;
 import com.kunion.taoke.login.LoginBean;
 import com.kunion.taoke.login.LoginContract;
 import com.kunion.taoke.login.LoginPresenter;
+import com.kunion.taoke.main.report.ReportFragment;
+import com.kunion.taoke.main.report.ReportPresenter;
+import com.kunion.taoke.model.ModelHelper;
 import com.kunion.taoke.util.AutoInstall;
 import com.kunion.taoke.util.SharePfeUtils;
+import com.kunion.taoke.widget.MyViewPager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -39,12 +46,12 @@ import static android.support.v4.util.Preconditions.checkNotNull;
  * Created by Administrator on 2017/10/10.
  */
 
-public class MainFragment extends Fragment implements MainContract.View, EasyPermissions.PermissionCallbacks {
+public class MainFragment extends Fragment implements MainContract.ViewPresenter, EasyPermissions.PermissionCallbacks {
     private static final int REQUEST_CODE_SAVE_IMG = 10;
     private final String TAG = getClass().getSimpleName();
     private MainContract.Presenter mPresenter;
-
-    private LoginBean mLoginBean;
+    private View mCurPage=null;
+    private MyViewPager mPager;
 
     @Override
     public void setPresenter(@NonNull MainContract.Presenter presenter) {
@@ -64,14 +71,13 @@ public class MainFragment extends Fragment implements MainContract.View, EasyPer
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MainFragBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_frag, container, false);
-        mLoginBean = new LoginBean();
+        View root = binding.getRoot();
+        mPager = root.findViewById(R.id.viewpager);
+        InitViewPager(mPager);
 
-        mLoginBean.name.set(TKApp.SPUtil.getValue("username", ""));
-        mLoginBean.password.set(TKApp.SPUtil.getValue("password", ""));
-
-        binding.setLoginbean(mLoginBean);
-//        binding.setPresenter((MainPresenter) mPresenter);
-        return binding.getRoot();
+        setCurPage(root.findViewById(R.id.main_home), 0);
+        binding.setPresenter((MainPresenter) mPresenter);
+        return root;
     }
 
     @Override
@@ -193,6 +199,58 @@ public class MainFragment extends Fragment implements MainContract.View, EasyPer
             mPresenter.installAPK();
             if (null != dialog && dialog.isShowing())
                 dialog.dismiss();
+        }
+    }
+
+    public void InitViewPager(MyViewPager mPager){
+        ArrayList<Fragment> fragmentList = new ArrayList<Fragment>();
+        ReportFragment reportFragment = ReportFragment.newInstance();
+        new ReportPresenter(ModelHelper.providerTasksRepository(), reportFragment);
+
+        fragmentList.add(reportFragment);
+        fragmentList.add(ReportFragment.newInstance());
+        fragmentList.add(ReportFragment.newInstance());
+
+        mPager.setOffscreenPageLimit(2);
+        //给ViewPager设置适配器
+        mPager.setAdapter(new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentList));
+        mPager.setScrollble(false);
+
+    }
+
+    public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        ArrayList<Fragment> list;
+        public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> list) {
+            super(fm);
+            this.list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Fragment getItem(int arg0) {
+            return list.get(arg0);
+        }
+
+    }
+
+    @Override
+    public void setCurPage(View v, int curIndex) {
+        if(mCurPage == null) {
+            mCurPage = v;
+            v.setSelected(true);
+            mPager.setCurrentItem(curIndex);
+            return ;
+        }
+
+        if (mCurPage != v) {
+            mCurPage.setSelected(false);
+            mCurPage = v;
+            mPager.setCurrentItem(curIndex);
+            v.setSelected(true);
         }
     }
 }

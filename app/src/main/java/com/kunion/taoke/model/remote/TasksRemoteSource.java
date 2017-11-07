@@ -7,9 +7,12 @@ import com.kunion.taoke.TKApp;
 import com.kunion.taoke.model.TasksSource;
 import com.kunion.taoke.model.remote.rest.RestService;
 import com.kunion.taoke.model.remote.rest.info.UserGroupInfo;
+import com.kunion.taoke.model.remote.rest.req.GetSaleByPage;
 import com.kunion.taoke.model.remote.rest.resp.CheckVersionResp;
 import com.kunion.taoke.model.remote.rest.resp.GroupsResp;
 import com.kunion.taoke.model.remote.rest.resp.LoginResp;
+import com.kunion.taoke.model.remote.rest.resp.SaleResp;
+import com.kunion.taoke.model.remote.rest.resp.StatsResp;
 import com.kunion.taoke.model.remote.rest.resp.StringResp;
 
 
@@ -52,7 +55,7 @@ public class TasksRemoteSource implements TasksSource{
     }
 
     @Override
-    public Observable<GroupsResp> getGroups(@NonNull int page, @NonNull int size) {
+    public Observable<GroupsResp> getGroups(int page, int size) {
         RestService service = ServiceGenerator.RestService();
         return service.getGroups(page, size);
     }
@@ -64,9 +67,25 @@ public class TasksRemoteSource implements TasksSource{
     }
 
     @Override
-    public Observable<CheckVersionResp> checkVersion(@NonNull int version) {
+    public Observable<CheckVersionResp> checkVersion(int version) {
         RestService service = ServiceGenerator.RestService();
         return service.checkVersion(version).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<SaleResp> getSalesByPage(int page, int size, @NonNull List<String> groups) {
+        RestService service = ServiceGenerator.RestService();
+
+        return service.getSalesByPage(new GetSaleByPage(page, size, groups)).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<StatsResp> getEffectByPage(int page, int size, @NonNull String group) {
+        RestService service = ServiceGenerator.RestService();
+
+        return service.getEffectByPage(page, size, group).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }

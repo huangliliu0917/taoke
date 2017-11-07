@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="statsInfo" type="com.kunion.taoke.model.remote.rest.info.StatsInfo" />
+        <import type="com.kunion.taoke.util.FormatUtil"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/stats_name"
+            style="@style/text_adapter_title"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{statsInfo.getThedate()}"
+            android:padding="@dimen/dp_4"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_4"
+            >
+
+            <TextView
+                android:id="@+id/stats_preprice"
+                style="@style/text_adapter_title"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/stats_click, statsInfo.getMixClick())}"
+                />
+
+            <TextView
+                android:id="@+id/stats_ei"
+                style="@style/text_adapter_title"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/stats_pay, FormatUtil.payIncome(statsInfo.getAlipayNum()))}"
+                android:layout_alignParentRight="true"
+                />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_4"
+            >
+
+            <TextView
+                android:id="@+id/stats_ctime"
+                style="@style/text_adapter_title"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/stats_effect, FormatUtil.payIncome(statsInfo.getAlipayRec()))}"
+                />
+            <TextView
+                android:id="@+id/stats_paystate"
+                style="@style/text_adapter_title"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{String.format(@string/stats_rec, FormatUtil.payIncome(statsInfo.getRec()))}"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

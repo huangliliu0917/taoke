@@ -1,47 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="loginbean" type="com.kunion.taoke.login.LoginBean" />
         <variable name="presenter"
-            type="com.kunion.taoke.login.LoginPresenter" />
+            type="com.kunion.taoke.main.MainPresenter" />
     </data>
 
     <LinearLayout
-        style="@style/login_layout_padding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <EditText
-            android:id="@+id/login_name"
+        <com.kunion.taoke.widget.MyViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/no_name"
-            android:inputType="text"
-            android:text="@={loginbean.name}"
+            android:layout_height="0dp"
+            android:flipInterval="30"
+            android:layout_weight="1"
             />
 
 
-        <EditText
-            android:id="@+id/login_password"
+        <include layout="@layout/layout_common_line"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="@string/no_password"
-            android:inputType="textPassword"
-            android:text="@={loginbean.password}"
-            />
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/icons">
 
-        <Button
-            android:id="@+id/go_login"
-            style="@style/button_text_max_width"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/login_title"
-            android:onClick="@{()-> presenter.loginTask(loginbean)}"
-            />
+            <TextView
+                android:id="@+id/main_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/main_tab_search"
+                android:textSize="14sp"
+                android:textColor="@drawable/recommend_price_sort_text_selector"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:drawableTop="@drawable/maintab_stats_selector"
+                android:paddingTop="5dp"
+                android:onClick="@{(view)-> presenter.switchPage(view, 0)}"
+                />
+
+            <TextView
+                android:id="@+id/main_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/main_tab_t"
+                android:textSize="14sp"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:textColor="@drawable/recommend_price_sort_text_selector"
+                android:orientation="vertical"
+                android:drawableTop="@drawable/maintab_message_selector"
+                android:paddingTop="5dp"
+                android:onClick="@{(view)-> presenter.switchPage(view, 1)}"/>
+
+            <TextView
+                android:id="@+id/main_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/main_tab_t_finish"
+                android:textSize="14sp"
+                android:textColor="@drawable/recommend_price_sort_text_selector"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:drawableTop="@drawable/maintab_item_selector"
+                android:paddingTop="5dp"
+                android:onClick="@{(view)-> presenter.switchPage(view, 2)}"
+                />
+
+            <!--<TextView-->
+                <!--android:id="@+id/main_mine"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1.0"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/main_tab_mine"-->
+                <!--android:textSize="14sp"-->
+                <!--android:textColor="@drawable/recommend_price_sort_text_selector"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:orientation="vertical"-->
+                <!--android:drawableTop="@drawable/maintab_mine_selector"-->
+                <!--android:paddingTop="5dp"-->
+                <!--/>-->
+        </LinearLayout>
+
 
 
     </LinearLayout>

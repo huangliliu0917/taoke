@@ -23,4 +23,59 @@
     <string name="background_download">后台下载</string>
     <string name="no_update">版本已经最新了。</string>
 
+
+    <string name="unknown">未知</string>
+    <string name="empty"></string>
+
+    <string name="report_title">效果</string>
+    <string name="report_sales">销量效果</string>
+    <string name="report_stats">统计效果</string>
+    <string name="fragment_locking_news_reloading">loading</string>
+    <string name="login_owner_empty">owner为空，数据异常，请联系客服。</string>
+    <string name="report_pre_price">原价:%1$s元</string>
+    <string name="report_ei_price">佣金:%1$s元</string>
+    <string name="report_sales_ctime">下单时间:%1$s</string>
+    <string name="report_sales_stime">结算时间:%1$s</string>
+    <string name="select_group">选择群：</string>
+    <string name="select_sale_count">订单总量：%1$s</string>
+    <string name="stats_click">点击：%1$s</string>
+    <string name="stats_pay">已付款数：%1$s</string>
+    <string name="stats_effect">效果：%1$s</string>
+    <string name="stats_rec">预估收入：%1$s</string>
+    <string name="user_message_replay">未回复</string>
+    <string name="select_item_send">发送</string>
+    <string name="select_item_transform">生成</string>
+    <string name="select_item_price">原价：%1$s元</string>
+    <string name="select_item_cprice">劵后价：%1$s元</string>
+    <string name="select_item_coupon">优惠劵：%1$s元</string>
+    <string name="select_item_yongj">佣金比例：%1$s%%</string>
+    <string name="select_item_yongj_rate">佣金：%1$s元</string>
+
+    <string name="select_item_send_empty_tip">没有需要发送的商品，请点击商品列加入商品。</string>
+
+    <string name="user_msg_thread_content">消息：%1$s</string>
+    <string name="user_msg_thread_time">时间：%1$s</string>
+
+    <string name="user_msg_thread">用户消息</string>
+
+    <string name="toast_tip_send_success">发送成功！</string>
+    <string name="login_menu_exit">退出</string>
+    <string name="toast_group_empty">账户下没有群，请先联系客服配置群。</string>
+
+    <string name="trans_items">生成结果</string>
+    <string name="trans_items_copy">拷贝</string>
+
+    <string name="transforming">生成中</string>
+    <string name="transform_finish">生成完成</string>
+    <string name="transform_fail">生成失败</string>
+
+    <string name="main_tab_search">数据</string>
+    <string name="main_tab_basket">消息</string>
+    <string name="main_tab_order">订单</string>
+    <string name="main_tab_mine">我</string>
+    <string name="main_tab_item">发送物品</string>
+    <string name="main_tab_t">物品篮</string>
+    <string name="main_tab_t_finish">生成图文</string>
+
+
 </resources>

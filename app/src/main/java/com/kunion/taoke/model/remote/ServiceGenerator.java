@@ -30,7 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator  {
     public static final String API_BASE_URL = "http://tk.owngiftc.com";
-
+//    public static final String API_BASE_URL = "http://192.168.31.217:3000";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit mRetrofit;
 
